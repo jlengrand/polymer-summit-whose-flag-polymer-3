@@ -98,6 +98,37 @@ export class WhoseFlagApp extends Element {
         </div>
         `;
     }
+
+    _selectAnswer(event) {
+        let clickedButton = event.target;
+        this.userAnswer = clickedButton.textContent;
+        if (this.userAnswer == this.correctAnswer.name) {
+          this.outputMessage = `${this.userAnswer} is correct!`;
+        }
+        else {
+          this.outputMessage = `Nope! The correct answer is ${this.correctAnswer.name} !`;
+        }
+      }
+
+      _handleResponse(event) {
+        this.countryList = event.detail.response.countrycodes;
+        while (!this.countryA || !this.countryB || (this.countryA.code == this.countryB.code)){
+          this.countryA = this.countryList[this.__getRandomCountry()];
+          this.countryB = this.countryList[this.__getRandomCountry()];
+        }
+        this.correctAnswer = this.countryA;
+
+        let coin = (Math.floor(Math.random() * 2));
+        this.correctAnswer = coin == 1 ? this.countryA : this.countryB;
+      }
+
+      __getRandomCountry() {
+        return Math.floor(Math.random() * (this.countryList.length));
+      }
+
+      _restart() {
+        window.location.reload();
+      }
 }
 
 customElements.define('whose-flag-app', WhoseFlagApp);
