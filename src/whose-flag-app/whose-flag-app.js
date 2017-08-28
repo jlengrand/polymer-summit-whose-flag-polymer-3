@@ -1,4 +1,9 @@
 import { Element } from '/node_modules/@polymer/polymer/polymer-element.js';
+import '/node_modules/@polymer/paper-button/paper-button.js';
+// import '/node_modules/@polymer/app-layout/app-layout.js';
+import '/node_modules/@polymer/iron-image/iron-image.js';
+import '/node_modules/@polymer/iron-ajax/iron-ajax.js';
+// import '/node_modules/@polymer/paper-styles/paper-syles.js';
 
 export class WhoseFlagApp extends Element {
     static get is() { return 'whose-flag-app'; }
@@ -25,6 +30,45 @@ export class WhoseFlagApp extends Element {
           }
         };
     }
+
+    _selectAnswer(event) {
+        let clickedButton = event.target;
+        this.userAnswer = clickedButton.textContent;
+        if (this.userAnswer == this.correctAnswer.name) {
+          this.outputMessage = `${this.userAnswer} is correct!`;
+        }
+        else {
+          this.outputMessage = `Nope! The correct answer is ${this.correctAnswer.name} !`;
+        }
+      }
+
+      _handleResponse(event) {
+        console.log("handling");
+        this.countryList = event.detail.response.countrycodes;
+        while (!this.countryA || !this.countryB || (this.countryA.code == this.countryB.code)){
+          this.countryA = this.countryList[this.__getRandomCountry()];
+          this.countryB = this.countryList[this.__getRandomCountry()];
+        }
+        this.correctAnswer = this.countryA;
+
+        let coin = (Math.floor(Math.random() * 2));
+        this.correctAnswer = coin == 1 ? this.countryA : this.countryB;
+
+        console.log("A ");
+        console.log(this.countryA);
+        console.log("B " + this.countryB);
+        console.log(this.countryB);
+        console.log("correct : " + this.correctAnswer);
+        console.log(this.correctAnswer);
+    }
+
+      __getRandomCountry() {
+        return Math.floor(Math.random() * (this.countryList.length));
+      }
+
+      _restart() {
+        window.location.reload();
+      }
 
     static get template(){
         return `
@@ -80,7 +124,8 @@ export class WhoseFlagApp extends Element {
         </app-header>
         <iron-ajax
             auto
-            url="data/countrycodes.json"
+            id="ironAjax"
+            url="/data/countrycodes.json"
             handle-as="json"
             on-response="_handleResponse">
         </iron-ajax>
@@ -98,37 +143,6 @@ export class WhoseFlagApp extends Element {
         </div>
         `;
     }
-
-    _selectAnswer(event) {
-        let clickedButton = event.target;
-        this.userAnswer = clickedButton.textContent;
-        if (this.userAnswer == this.correctAnswer.name) {
-          this.outputMessage = `${this.userAnswer} is correct!`;
-        }
-        else {
-          this.outputMessage = `Nope! The correct answer is ${this.correctAnswer.name} !`;
-        }
-      }
-
-      _handleResponse(event) {
-        this.countryList = event.detail.response.countrycodes;
-        while (!this.countryA || !this.countryB || (this.countryA.code == this.countryB.code)){
-          this.countryA = this.countryList[this.__getRandomCountry()];
-          this.countryB = this.countryList[this.__getRandomCountry()];
-        }
-        this.correctAnswer = this.countryA;
-
-        let coin = (Math.floor(Math.random() * 2));
-        this.correctAnswer = coin == 1 ? this.countryA : this.countryB;
-      }
-
-      __getRandomCountry() {
-        return Math.floor(Math.random() * (this.countryList.length));
-      }
-
-      _restart() {
-        window.location.reload();
-      }
 }
 
 customElements.define('whose-flag-app', WhoseFlagApp);
