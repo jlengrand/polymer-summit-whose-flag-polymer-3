@@ -4,6 +4,7 @@ import '/node_modules/@polymer/paper-button/paper-button.js';
 import '/node_modules/@polymer/iron-image/iron-image.js';
 import '/node_modules/@polymer/iron-ajax/iron-ajax.js';
 // import '/node_modules/@polymer/paper-styles/paper-syles.js';
+import '/node_modules/@polymer/paper-styles/color.js';
 
 export class WhoseFlagApp extends Element {
     static get is() { return 'whose-flag-app'; }
@@ -43,7 +44,6 @@ export class WhoseFlagApp extends Element {
       }
 
       _handleResponse(event) {
-        console.log("handling");
         this.countryList = event.detail.response.countrycodes;
         while (!this.countryA || !this.countryB || (this.countryA.code == this.countryB.code)){
           this.countryA = this.countryList[this.__getRandomCountry()];
@@ -53,13 +53,6 @@ export class WhoseFlagApp extends Element {
 
         let coin = (Math.floor(Math.random() * 2));
         this.correctAnswer = coin == 1 ? this.countryA : this.countryB;
-
-        console.log("A ");
-        console.log(this.countryA);
-        console.log("B " + this.countryB);
-        console.log(this.countryB);
-        console.log("correct : " + this.correctAnswer);
-        console.log(this.correctAnswer);
     }
 
       __getRandomCountry() {
