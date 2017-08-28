@@ -1,2 +1,7 @@
 bower_components
 node_modules
+
+build
+
+yarn.lok
+yarn-error.log
