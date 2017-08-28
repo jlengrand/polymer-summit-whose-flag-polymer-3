@@ -26,53 +26,6 @@ export class WhoseFlagApp extends Element {
         };
     }
 
-    static get style() { 
-        return `
-        :host {
-            display: block;
-            font-family: Roboto, Noto, sans-serif;
-          }
-          paper-button {
-            color: white;
-          }
-          paper-button.another {
-            background: var(--paper-blue-500);
-            width: 100%;
-          }
-          paper-button.another:hover {
-            background: var(--paper-light-blue-500);
-          }
-          paper-button.answer {
-            background: var(--paper-purple-500);
-            flex-grow: 1;
-          }
-          paper-button.answer:hover {
-            background: var(--paper-pink-500);
-          }
-          app-toolbar {
-            background-color: var(--paper-blue-500);
-            color: white;
-            margin: 20px 0;
-          }
-          iron-image {
-            border: solid;
-            width: 100%;
-            --iron-image-width: 100%;
-             background-color: white;
-          }
-          #flag-image-container {
-            max-width: 600px;
-            width: 100%;
-            margin: 0 auto;
-          }
-          #answer-button-container {
-            display: flex; /* or inline-flex */
-            flex-flow: row wrap;
-            justify-content:space-around;
-          }
-        `;
-    }
-
     static get template(){
         return `
         <style>
