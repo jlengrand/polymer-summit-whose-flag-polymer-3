@@ -3,8 +3,7 @@ import '/node_modules/@polymer/paper-button/paper-button.js';
 // import '/node_modules/@polymer/app-layout/app-layout.js';
 import '/node_modules/@polymer/iron-image/iron-image.js';
 import '/node_modules/@polymer/iron-ajax/iron-ajax.js';
-// import '/node_modules/@polymer/paper-styles/paper-syles.js';
-import '/node_modules/@polymer/paper-styles/color.js';
+import '/node_modules/@polymer/paper-styles/paper-styles.js';
 
 export class WhoseFlagApp extends Element {
     static get is() { return 'whose-flag-app'; }
