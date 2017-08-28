@@ -1,33 +1,25 @@
-# \<whose-flag\>
+# \<whose-flag on Polymer 3\>
 
-A simple game that lets users guess a flag&#39;s country
+This is a simple conversion from Whose Flag to Polymer 3. Whose Flag is a simple game that lets users guess a flag&#39;s country, that was created during [the first Polymer Summit 2017's codelab](https://codelabs.developers.google.com/polymer-summit-2017).
+
+You can find the original codelab instructions [here](https://codelabs.developers.google.com/codelabs/whose-flag/index.html), [a similar repository on Polymer 2 here](https://github.com/jlengrand/polymer-summit-whose-flag) and [a working demo here](https://polymer-summit-2017-codelab-1.firebaseapp.com/).
 
 ## Install the Polymer-CLI
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
+First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve --npm` to serve your application locally.
+
+__Note the difference with the `polymer serve` instructions for Polymer 2__
 
 ## Viewing Your Application
 
 ```
-$ polymer serve
+$ polymer serve --npm
 ```
 
 ## Building Your Application
 
-```
-$ polymer build
-```
-
-This will create builds of your application in the `build/` directory, optimized to be served in production. You can then serve the built versions by giving `polymer serve` a folder to serve from:
-
-```
-$ polymer serve build/default
-```
+**WIP: Polymer build does not seem to be supported yet for Polymer 3.**
 
 ## Running Tests
 
-```
-$ polymer test
-```
-
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+**To be tested**
