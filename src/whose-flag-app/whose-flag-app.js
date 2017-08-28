@@ -90,6 +90,16 @@ export class WhoseFlagApp extends Element {
             background-color: var(--paper-blue-500);
             color: white;
             margin: 20px 0;
+          }          
+          
+          .main-title {
+            background-color: var(--paper-blue-500);
+            color: white;
+            margin: 20px 0;
+            height: 66px;
+            font-size: 20px;
+            padding: 0 16px;
+            line-height: 64px;
           }
           iron-image {
             border: solid;
@@ -109,9 +119,9 @@ export class WhoseFlagApp extends Element {
           }
         </style>
 
+        <div class="main-title" main-title>Whose flag is this?</div>
         <app-header>
             <app-toolbar>
-            <div main-title>Whose flag is this?</div>
             </app-toolbar>
         </app-header>
         <iron-ajax
