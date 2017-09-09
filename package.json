@@ -13,7 +13,8 @@
         "@polymer/iron-image": "next",
         "@polymer/paper-button": "next",
         "@polymer/paper-styles": "next",
-        "@polymer/polymer": "next"
+        "@polymer/polymer": "next",
+        "lit-html": "^0.6.0"
     },
     "resolutions": {
         "@polymer/paper-styles": "3.0.0-pre.1"

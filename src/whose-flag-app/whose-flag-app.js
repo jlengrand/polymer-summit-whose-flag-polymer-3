@@ -1,9 +1,10 @@
 import { Element } from '/node_modules/@polymer/polymer/polymer-element.js';
 import '/node_modules/@polymer/paper-button/paper-button.js';
-// import '/node_modules/@polymer/app-layout/app-layout.js';
 import '/node_modules/@polymer/iron-image/iron-image.js';
 import '/node_modules/@polymer/iron-ajax/iron-ajax.js';
 import '/node_modules/@polymer/paper-styles/paper-styles.js';
+
+import {html, render} from '/node_modules/lit-html/lit-html.js';
 
 export class WhoseFlagApp extends Element {
     static get is() { return 'whose-flag-app'; }
@@ -62,88 +63,99 @@ export class WhoseFlagApp extends Element {
         window.location.reload();
       }
 
-    static get template(){
-        return `
-        <style>
-          :host {
-            display: block;
-            font-family: Roboto, Noto, sans-serif;
-          }
-          paper-button {
-            color: white;
-          }
-          paper-button.another {
-            background: var(--paper-blue-500);
-            width: 100%;
-          }
-          paper-button.another:hover {
-            background: var(--paper-light-blue-500);
-          }
-          paper-button.answer {
-            background: var(--paper-purple-500);
-            flex-grow: 1;
-          }
-          paper-button.answer:hover {
-            background: var(--paper-pink-500);
-          }
-          app-toolbar {
-            background-color: var(--paper-blue-500);
-            color: white;
-            margin: 20px 0;
-          }          
-          
-          .main-title {
-            background-color: var(--paper-blue-500);
-            color: white;
-            margin: 20px 0;
-            height: 66px;
-            font-size: 20px;
-            padding: 0 16px;
-            line-height: 64px;
-          }
-          iron-image {
-            border: solid;
-            width: 100%;
-            --iron-image-width: 100%;
-             background-color: white;
-          }
-          #flag-image-container {
-            max-width: 600px;
-            width: 100%;
-            margin: 0 auto;
-          }
-          #answer-button-container {
-            display: flex; /* or inline-flex */
-            flex-flow: row wrap;
-            justify-content:space-around;
-          }
-        </style>
+    draw(){
+      return html`
+      <style>
+        :host {
+          display: block;
+          font-family: Roboto, Noto, sans-serif;
+        }
+        paper-button {
+          color: white;
+        }
+        paper-button.another {
+          background: var(--paper-blue-500);
+          width: 100%;
+        }
+        paper-button.another:hover {
+          background: var(--paper-light-blue-500);
+        }
+        paper-button.answer {
+          background: var(--paper-purple-500);
+          flex-grow: 1;
+        }
+        paper-button.answer:hover {
+          background: var(--paper-pink-500);
+        }
+        app-toolbar {
+          background-color: var(--paper-blue-500);
+          color: white;
+          margin: 20px 0;
+        }          
+        
+        .main-title {
+          background-color: var(--paper-blue-500);
+          color: white;
+          margin: 20px 0;
+          height: 66px;
+          font-size: 20px;
+          padding: 0 16px;
+          line-height: 64px;
+        }
+        iron-image {
+          border: solid;
+          width: 100%;
+          --iron-image-width: 100%;
+           background-color: white;
+        }
+        #flag-image-container {
+          max-width: 600px;
+          width: 100%;
+          margin: 0 auto;
+        }
+        #answer-button-container {
+          display: flex; /* or inline-flex */
+          flex-flow: row wrap;
+          justify-content:space-around;
+        }
+      </style>
 
-        <div class="main-title" main-title>Whose flag is this?</div>
-        <app-header>
-            <app-toolbar>
-            </app-toolbar>
-        </app-header>
-        <iron-ajax
-            auto
-            id="ironAjax"
-            url="/data/countrycodes.json"
-            handle-as="json"
-            on-response="_handleResponse">
-        </iron-ajax>
-        <div id="flag-image-container">
-            <iron-image 
-            id="flag-image"
-            preload fade src="data/svg/[[correctAnswer.code]].svg">
-            </iron-image>
-            <div id="answer-button-container">
-            <paper-button on-click="_selectAnswer" id="optionA" class="answer">[[countryA.name]]</paper-button>
-            <paper-button on-click="_selectAnswer" id="optionB" class="answer">[[countryB.name]]</paper-button>
-            </div>
-            <p>[[outputMessage]]</p>
-            <paper-button on-click="_restart" class="another" id="another">Another!</paper-button> 
-        </div>
-        `;
+      <div class="main-title" main-title>Whose flag is this?</div>
+      <app-header>
+          <app-toolbar>
+          </app-toolbar>
+      </app-header>
+      <iron-ajax
+          auto
+          id="ironAjax"
+          url="/data/countrycodes.json"
+          handle-as="json"
+          on-response="_handleResponse">
+      </iron-ajax>
+      <div id="flag-image-container">
+          <iron-image 
+          id="flag-image"
+          preload fade src="data/svg/[[correctAnswer.code]].svg">
+          </iron-image>
+          <div id="answer-button-container">
+          <paper-button on-click="_selectAnswer" id="optionA" class="answer">[[countryA.name]]</paper-button>
+          <paper-button on-click="_selectAnswer" id="optionB" class="answer">[[countryB.name]]</paper-button>
+          </div>
+          <p>[[outputMessage]]</p>
+          <paper-button on-click="_restart" class="another" id="another">Another!</paper-button> 
+      </div>
+      `;
+    }
+
+    ready(){
+      super.ready();
+      console.log("ready");
+      render(this.draw(), this.shadowRoot);
+    }
+
+    constructor() {
+      super();
+      this.attachShadow({mode: 'open'});
     }
 }
 
