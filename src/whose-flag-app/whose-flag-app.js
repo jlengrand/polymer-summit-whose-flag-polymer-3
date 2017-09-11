@@ -4,24 +4,37 @@ import '/node_modules/@polymer/iron-image/iron-image.js';
 import '/node_modules/@polymer/iron-ajax/iron-ajax.js';
 import '/node_modules/@polymer/paper-styles/paper-styles.js';
 
-import {html, render} from '/node_modules/lit-html/lit-html.js';
+import {html} from '/node_modules/lit-html/lit-html.js';
+import {render} from '/node_modules/lit-html/lib/lit-extended.js';
 
 export class WhoseFlagApp extends Element {
     static get is() { return 'whose-flag-app'; }
     static get properties() {
         return {
           countryA: {
-            type: Object
+            type: Object,
+            value:{ 
+              code: "",
+              name: ""
+            }
           },
           countryB: {
-            type: Object
+            type: Object,
+            value:{ 
+              code: "",
+              name: ""
+            }
           }, 
           outputMessage: {
             type: String, 
             value: ""
           },
           correctAnswer: {
-            type: Object
+            type: Object, 
+            value:{ 
+              code: "",
+              name: ""
+            }
           }, 
           userAnswer: {
             type: String, 
@@ -41,6 +54,7 @@ export class WhoseFlagApp extends Element {
         else {
           this.outputMessage = `Nope! The correct answer is ${this.correctAnswer.name} !`;
         }
+        render(this.draw(), this.shadowRoot);      
       }
 
       _handleResponse(event) {
@@ -52,8 +66,9 @@ export class WhoseFlagApp extends Element {
         this.correctAnswer = this.countryA;
 
         let coin = (Math.floor(Math.random() * 2));
-        this.correctAnswer = coin == 1 ? this.countryA : this.countryB;
-    }
+        this.correctAnswer = coin == 1 ? this.countryA : this.countryB;       
+        render(this.draw(), this.shadowRoot);      
+      }
 
       __getRandomCountry() {
         return Math.floor(Math.random() * (this.countryList.length));
@@ -130,32 +145,31 @@ export class WhoseFlagApp extends Element {
           id="ironAjax"
           url="/data/countrycodes.json"
           handle-as="json"
-          on-response="_handleResponse">
+          on-response=${ e => this._handleResponse(e)}>
       </iron-ajax>
       <div id="flag-image-container">
           <iron-image 
           id="flag-image"
-          preload fade src="data/svg/[[correctAnswer.code]].svg">
+          preload fade src="data/svg/${this.correctAnswer.code}.svg">
           </iron-image>
           <div id="answer-button-container">
-          <paper-button on-click="_selectAnswer" id="optionA" class="answer">[[countryA.name]]</paper-button>
-          <paper-button on-click="_selectAnswer" id="optionB" class="answer">[[countryB.name]]</paper-button>
+          <paper-button on-click=${ e => this._selectAnswer(e)} id="optionA" class="answer">${this.countryA.name}</paper-button>
+          <paper-button on-click=${ e => this._selectAnswer(e)} id="optionB" class="answer">${this.countryB.name}</paper-button>
           </div>
-          <p>[[outputMessage]]</p>
-          <paper-button on-click="_restart" class="another" id="another">Another!</paper-button> 
+          <p>${this.outputMessage}</p>
+          <paper-button on-click=${ e => this._restart(e)} class="another" id="another">Another!</paper-button> 
       </div>
       `;
     }
 
     ready(){
       super.ready();
-      console.log("ready");
-      render(this.draw(), this.shadowRoot);
     }
 
     constructor() {
       super();
       this.attachShadow({mode: 'open'});
+      render(this.draw(), this.shadowRoot);      
     }
 }
 
