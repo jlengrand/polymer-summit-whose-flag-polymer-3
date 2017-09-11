@@ -23,3 +23,10 @@ $ polymer serve --npm
 ## Running Tests
 
 **To be tested**
+
+## Lit-HTML
+
+The last version of this demo makes use of [lit-html](https://github.com/PolymerLabs/lit-html).
+Lit-HTML allows to use HTML templates, via JavaScript template literals. 
+
+The template literal is properly highlighted using Atom. No extensions are available yet to highlight the literal with VSCode that I know of.
